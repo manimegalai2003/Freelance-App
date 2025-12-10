@@ -52,12 +52,11 @@
             opacity: 0.9;
         }
 
-        /* POPUP MESSAGE */
+        /* Success Popup (below form) */
         #popupMessage {
             display: none;
-            margin: 20px auto;
+            margin-top: 20px;
             padding: 15px;
-            max-width: 650px;
             background: #8a2be2;
             color: white;
             border-radius: 12px;
@@ -67,8 +66,8 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -114,10 +113,7 @@
       </div>
   </div>
 
-  <!-- POPUP SUCCESS BOX -->
-  <div id="popupMessage">Message Sent Successfully! We will contact you shortly.</div>
-
-  <!-- FINAL FORM -->
+  <!-- FORM CARD -->
   <div class="contact-form-card">
       <h3 style="text-align:center; margin-bottom:25px; font-size:26px; color:#8a2be2; font-weight:700;">
         Send a Message
@@ -125,7 +121,6 @@
 
       <form id="contactForm">
 
-          <!-- FormSubmit hidden fields -->
           <input type="hidden" name="_captcha" value="false">
           <input type="hidden" name="_template" value="table">
 
@@ -143,6 +138,9 @@
 
           <button type="submit">Send Message</button>
       </form>
+
+      <!-- POPUP BELOW FORM -->
+      <div id="popupMessage">Message Sent Successfully! We will contact you shortly.</div>
   </div>
 
 </section>
@@ -151,10 +149,10 @@
   © 2025 KM Tech. All Rights Reserved.
 </footer>
 
-<!-- AJAX SCRIPT TO STOP REDIRECT -->
+<!-- AJAX SCRIPT -->
 <script>
 document.getElementById("contactForm").addEventListener("submit", function(e) {
-    e.preventDefault(); // Stop redirect
+    e.preventDefault(); // Prevent page reload
 
     const formData = new FormData(this);
 
@@ -164,10 +162,8 @@ document.getElementById("contactForm").addEventListener("submit", function(e) {
         body: formData
     })
     .then(response => {
-        // Show popup
         document.getElementById("popupMessage").style.display = "block";
-        // Clear form
-        document.getElementById("contactForm").reset();
+        this.reset();
     })
     .catch(error => alert("Something went wrong. Please try again!"));
 });
