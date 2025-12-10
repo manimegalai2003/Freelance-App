@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Thanks — KM TechWorks</title>
+
+  <!-- Font (optional) + icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    :root{
+      --accent1: #ff63b1;
+      --accent2: #8a2be2;
+      --bg: linear-gradient(180deg,#f8f6ff 0%, #f1eefb 100%);
+      --card-bg: #ffffff;
+      --muted: #6b6b7a;
+      --container: 1100px;
+    }
+    html,body{height:100%;margin:0;font-family:'Poppins',system-ui,Arial,sans-serif;background:var(--bg);color:#111}
+    .wrap{min-height:100%;display:flex;align-items:center;justify-content:center;padding:48px}
+    .card {
+      width:100%;
+      max-width:720px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.92));
+      border-radius:18px;
+      box-shadow: 0 18px 50px rgba(12,12,30,0.08);
+      padding:36px;
+      text-align:center;
+      border: 1px solid rgba(138,43,226,0.06);
+    }
+
+    /* Check icon */
+    .icon-wrap{
+      width:110px;height:110px;border-radius:60px;
+      display:flex;align-items:center;justify-content:center;margin:0 auto 18px;
+      background: radial-gradient(circle at 30% 20%, rgba(255,99,177,0.12), transparent 30%),
+                  radial-gradient(circle at 70% 80%, rgba(138,43,226,0.10), transparent 30%);
+      box-shadow: 0 10px 30px rgba(138,43,226,0.12), inset 0 1px 0 rgba(255,255,255,0.35);
+    }
+    .icon { font-size:48px; color: linear-gradient(#ff63b1,#8a2be2); color:#8a2be2; filter: drop-shadow(0 6px 18px rgba(138,43,226,0.15));}
+
+    h1{font-size:28px;margin:8px 0 6px;font-weight:800;color:#2c184f}
+    p.lead{color:var(--muted);font-size:16px;line-height:1.8;margin:0 0 20px;}
+    p.personal{font-weight:600;color:#4a2578;margin-top:6px}
+
+    .actions{display:flex;gap:12px;justify-content:center;margin-top:22px;flex-wrap:wrap}
+    .btn{
+      display:inline-block;padding:12px 20px;border-radius:12px;text-decoration:none;font-weight:700;
+      box-shadow:0 8px 20px rgba(15,15,30,0.06);border: none; cursor:pointer;
+    }
+    .btn-primary{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:white}
+    .btn-outline{background:transparent;border:2px solid rgba(138,43,226,0.12);color:#6e22cc}
+
+    .meta {margin-top:18px;color:#8b86a9;font-size:14px}
+    .socials{margin-top:18px;display:flex;gap:18px;justify-content:center}
+    .socials a{font-size:20px;color:#6e22cc;text-decoration:none;transition:transform .18s, color .18s}
+    .socials a:hover{transform:translateY(-4px);color:var(--accent2)}
+
+    /* small responsive */
+    @media (max-width:520px){
+      .card{padding:22px}
+      .icon-wrap{width:84px;height:84px}
+      h1{font-size:22px}
+      .btn{padding:10px 14px;font-size:15px}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wrap">
+    <div class="card" role="region" aria-labelledby="thanksTitle">
+      <div class="icon-wrap" aria-hidden="true">
+        <!-- simple check SVG -->
+        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" class="icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M20 6L9 17l-5-5" stroke="#8A2BE2" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+        </svg>
+      </div>
+
+      <h1 id="thanksTitle">Thanks — your message has been sent!</h1>
+
+      <!-- personalized text (JS will replace if ?name= present) -->
+      <p class="lead" id="lead">We received your message and will reply within 24 hours. Thank you for reaching out to KM TechWorks.</p>
+      <p class="personal" id="personalLine" style="display:none;"></p>
+
+      <div class="actions" role="group" aria-label="Next actions">
+        <a class="btn btn-primary" href="index.html">Back to Home</a>
+        <a class="btn btn-outline" href="projects.html">View Projects</a>
+        <a class="btn btn-outline" href="contact.html">Send Another</a>
+      </div>
+
+      <div class="meta" id="metaNote">
+        Tip: If you don't see a reply, check your spam folder or email us directly at <strong>kmtech.innovation@gmail.com</strong>.
+      </div>
+
+      <div class="socials" aria-hidden="false">
+        <a href="https://instagram.com" target="_blank" title="Instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://facebook.com" target="_blank" title="Facebook" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+        <a href="https://linkedin.com" target="_blank" title="LinkedIn" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // personalize if form passes ?name=YourName
+    (function(){
+      const params = new URLSearchParams(window.location.search);
+      const name = params.get('name') || params.get('fullName') || params.get('yourName');
+      if(name){
+        const pl = document.getElementById('personalLine');
+        pl.textContent = `Hi ${decodeURIComponent(name)}, we will reply to you shortly.`;
+        pl.style.display = 'block';
+      }
+
+      // Optional: show a small success animation (pulse)
+      const iconWrap = document.querySelector('.icon-wrap');
+      if(iconWrap){
+        iconWrap.animate([
+          { transform: 'scale(0.98)', opacity: 0.95 },
+          { transform: 'scale(1.03)', opacity: 1 }
+        ], { duration: 700, easing: 'ease-out' });
+      }
+    })();
+  </script>
+
+  <!--
+    NOTES:
+    - Set your form's hidden input _next to the full URL of this thankyou.html page.
+      Example: <input type="hidden" name="_next" value="https://yourdomain.com/thankyou.html">
+    - If you want an automatic redirect back to the homepage after a few seconds,
+      uncomment the meta-refresh line below and set seconds to your preference.
+
+    <meta http-equiv="refresh" content="8;url=index.html" />
+  -->
+
+</body>
+</html>
