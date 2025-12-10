@@ -3,8 +3,29 @@
 <head>
     <link rel="icon" type="image/svg+xml" href="https://foreign-rose-4t39jfsvhb-opspf1xh0z.edgeone.dev/KM%20Tech%20logo.png">
 
-  <title>KM Tech - Contact</title>
-  <link rel="stylesheet" href="css/style.css">
+    <title>KM Tech - Contact</title>
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        /* Success Popup Message */
+        #popupMessage {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background: #8a2be2;
+            color: white;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+    </style>
+
 </head>
 <body>
 
@@ -13,8 +34,7 @@
   <ul>
     <li><a href="index.html">Home</a></li>
     <li><a href="services.html">Services</a></li>
-        <li><a href="about.html">About</a></li>
-
+    <li><a href="about.html">About</a></li>
     <li><a href="projects.html">Projects</a></li>
     <li><a href="contact.html">Contact</a></li>
   </ul>
@@ -27,17 +47,16 @@
   </h2>
 
   <p style="text-align:center; max-width:750px; margin:auto; font-size:18px; opacity:0.8;">
-    Send us your project details or questions. 
+    Send us your project details or questions.
   </p>
 
   <div class="card-box" style="margin-top:40px;">
-
-    <!-- CONTACT INFO -->
     
-<div class="card">
-  <h3>Response Time</h3>
-  <p>We usually respond within 1–2 hours via email.</p>
-</div>
+    <div class="card">
+      <h3>Response Time</h3>
+      <p>We usually respond within 1–2 hours via email.</p>
+    </div>
+
     <div class="card">
       <h3>Email</h3>
       <p>kmtech.innovation@gmail.com</p>
@@ -51,8 +70,7 @@
   </div>
 
 
-  <!-- CONTACT FORM (WORKING) -->
-  <!-- CONTACT FORM (UPDATED & BEAUTIFUL) -->
+<!-- CONTACT FORM -->
 <div class="card" style="
   max-width:650px; 
   margin:50px auto; 
@@ -65,12 +83,10 @@
     Send a Message
   </h3>
 
-  <form action="https://formsubmit.co/kmtech.innovation@gmail.com" method="POST">
+  <form id="contactForm">
 
-  <input type="hidden" name="_captcha" value="false">
-
-  <!-- Redirect to YOUR thankyou page -->
-  <input type="hidden" name="_next" value="thanks.html">
+    <!-- Required for FormSubmit -->
+    <input type="hidden" name="_captcha" value="false">
 
     <label style="font-weight:600; margin-bottom:5px; display:block;">Name</label>
     <input type="text" name="name" required 
@@ -109,14 +125,41 @@
     </button>
 
   </form>
-</div>
 
+  <!-- SUCCESS POPUP -->
+  <div id="popupMessage">Message Sent Successfully! We will contact you shortly.</div>
+
+</div>
 
 </section>
 
 <footer>
   © 2025 KM Tech. All Rights Reserved.
 </footer>
+
+<!-- AJAX SCRIPT TO PREVENT REDIRECT -->
+<script>
+document.getElementById("contactForm").addEventListener("submit", function(e) {
+    e.preventDefault(); // Prevent form reload
+
+    const formData = new FormData(this);
+
+    fetch("https://formsubmit.co/kmtech.innovation@gmail.com", {
+        method: "POST",
+        body: formData
+    })
+    .then(response => {
+        // Show success popup
+        document.getElementById("popupMessage").style.display = "block";
+
+        // Clear form fields
+        document.getElementById("contactForm").reset();
+    })
+    .catch(error => {
+        alert("Something went wrong. Please try again!");
+    });
+});
+</script>
 
 </body>
 </html>
