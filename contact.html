@@ -137,29 +137,36 @@
   © 2025 KM Tech. All Rights Reserved.
 </footer>
 
-<!-- AJAX SCRIPT TO PREVENT REDIRECT -->
 <script>
 document.getElementById("contactForm").addEventListener("submit", function(e) {
-    e.preventDefault(); // Prevent form reload
+    e.preventDefault(); // Prevent page reload
 
     const formData = new FormData(this);
 
     fetch("https://formsubmit.co/kmtech.innovation@gmail.com", {
         method: "POST",
+        headers: {
+            "Accept": "application/json"
+        },
         body: formData
     })
     .then(response => {
-        // Show success popup
-        document.getElementById("popupMessage").style.display = "block";
+        if (response.ok) {
+            // Show success popup
+            document.getElementById("popupMessage").style.display = "block";
 
-        // Clear form fields
-        document.getElementById("contactForm").reset();
+            // Clear form
+            document.getElementById("contactForm").reset();
+        } else {
+            alert("Error: Unable to send message.");
+        }
     })
     .catch(error => {
         alert("Something went wrong. Please try again!");
     });
 });
 </script>
+
 
 </body>
 </html>
