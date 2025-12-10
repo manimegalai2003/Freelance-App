@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="css/style.css">
 
     <style>
-        /* Beautiful Form Styling */
+        /* Form Styling */
         .contact-form-card {
             max-width: 650px;
             margin: 50px auto;
@@ -51,6 +51,25 @@
         .contact-form-card button:hover {
             opacity: 0.9;
         }
+
+        /* POPUP MESSAGE */
+        #popupMessage {
+            display: none;
+            margin: 20px auto;
+            padding: 15px;
+            max-width: 650px;
+            background: #8a2be2;
+            color: white;
+            border-radius: 12px;
+            font-weight: bold;
+            text-align: center;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
     </style>
 </head>
 
@@ -79,35 +98,35 @@
 
   <div class="card-box" style="margin-top:40px;">
 
-    <div class="card">
-      <h3>Response Time</h3>
-      <p>We usually respond within 1–2 hours via email.</p>
-    </div>
+      <div class="card">
+        <h3>Response Time</h3>
+        <p>We usually respond within 1–2 hours via email.</p>
+      </div>
 
-    <div class="card">
-      <h3>Email</h3>
-      <p>kmtech.innovation@gmail.com</p>
-    </div>
+      <div class="card">
+        <h3>Email</h3>
+        <p>kmtech.innovation@gmail.com</p>
+      </div>
 
-    <div class="card">
-      <h3>Address</h3>
-      <p>Coimbatore, Tamil Nadu, India</p>
-    </div>
-
+      <div class="card">
+        <h3>Address</h3>
+        <p>Coimbatore, Tamil Nadu, India</p>
+      </div>
   </div>
 
-  <!-- FINAL BEAUTIFUL FORM -->
+  <!-- POPUP SUCCESS BOX -->
+  <div id="popupMessage">Message Sent Successfully! We will contact you shortly.</div>
+
+  <!-- FINAL FORM -->
   <div class="contact-form-card">
       <h3 style="text-align:center; margin-bottom:25px; font-size:26px; color:#8a2be2; font-weight:700;">
         Send a Message
       </h3>
 
-      <form action="https://formsubmit.co/kmtech.innovation@gmail.com" method="POST">
+      <form id="contactForm">
 
-          <!-- Disable CAPTCHA -->
+          <!-- FormSubmit hidden fields -->
           <input type="hidden" name="_captcha" value="false">
-
-          <!-- Email format -->
           <input type="hidden" name="_template" value="table">
 
           <label>Name</label>
@@ -131,6 +150,28 @@
 <footer>
   © 2025 KM Tech. All Rights Reserved.
 </footer>
+
+<!-- AJAX SCRIPT TO STOP REDIRECT -->
+<script>
+document.getElementById("contactForm").addEventListener("submit", function(e) {
+    e.preventDefault(); // Stop redirect
+
+    const formData = new FormData(this);
+
+    fetch("https://formsubmit.co/kmtech.innovation@gmail.com", {
+        method: "POST",
+        headers: { "Accept": "application/json" },
+        body: formData
+    })
+    .then(response => {
+        // Show popup
+        document.getElementById("popupMessage").style.display = "block";
+        // Clear form
+        document.getElementById("contactForm").reset();
+    })
+    .catch(error => alert("Something went wrong. Please try again!"));
+});
+</script>
 
 </body>
 </html>
